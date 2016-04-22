@@ -14,7 +14,7 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        _search = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, UISCREEN_WIGHT, 35)];
+        _search = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 5, UISCREEN_WIGHT, 35)];
         _search.searchBarStyle = UISearchBarStyleMinimal;
         _search.backgroundColor = [UIColor clearColor];
          _search.placeholder = @"搜索";

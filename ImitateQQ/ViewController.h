@@ -28,6 +28,10 @@
 
 @property(nonatomic, strong) FriendTitleCell *friendCell;
 
+@property(nonatomic, strong) UIImage *headImage;
+
+-(UIImage*)clipImge:(UIImage*)image;
+
 //进行下拉刷新加载数据
 -(void)getMyPresentGroup:(BOOL) clear;
 

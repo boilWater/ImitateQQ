@@ -24,13 +24,9 @@
 
 @property(nonatomic, weak) UISearchBar *search;
 
-@property(nonatomic, weak) UIImageView *firendView;
-@property(nonatomic, weak) UIImageView *specialCareView;
-@property(nonatomic, weak) UIImageView *groupView;
-@property(nonatomic, weak) UIImageView *publicView;
-
-@property(nonatomic, weak) UIImageView *topImageV;
-@property(nonatomic, weak) UIImageView *bottomImageV;
-
+@property (nonatomic, weak) UIButton *addFriendButton;
+@property (nonatomic, weak) UIButton *caresButton;
+@property (nonatomic, weak) UIButton *groupButton;
+@property (nonatomic, weak) UIButton *publicNumberButton;
 
 @end

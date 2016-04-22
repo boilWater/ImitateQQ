@@ -10,14 +10,33 @@
 
 @implementation ClipImageUtils
 
-+(UIImage*)clipImageRedious:(UIImage*)image{
+static ClipImageUtils *_sharedInstanced = nil;
+
++(ClipImageUtils*)sharedInstance{
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        _sharedInstanced = [[ClipImageUtils alloc] init];
+    });
+    return _sharedInstanced;
+}
+
+-(UIImage*)clipImageRedious:(UIImage*)image{
     UIGraphicsBeginImageContextWithOptions(image.size, NO, 0);
     UIBezierPath *clipBezier = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, image.size.width, image.size.width)];
     [clipBezier addClip];
     [image drawAtPoint:CGPointZero];
-    UIImage *tempImage = UIGraphicsGetImageFromCurrentImageContext();
+    self.clipImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return tempImage;
+    return self.clipImage;
 }
+
+/*
+ UIGraphicsBeginImageContextWithOptions(image.size, NO, 0);
+ UIBezierPath *clipBezier = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, image.size.width, image.size.width)];
+ [clipBezier addClip];
+ [image drawAtPoint:CGPointZero];
+ wself.image = UIGraphicsGetImageFromCurrentImageContext();
+ UIGraphicsEndImageContext();
+*/
 
 @end

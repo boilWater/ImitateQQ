@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic)  UIImageView *Headerphoto;
 
+@property (strong, nonatomic)  UIImageView *bubbloView;
+
 @property (strong, nonatomic) UIImageView *imageLine;
 
 - (void)setMainCell;

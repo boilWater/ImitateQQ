@@ -11,6 +11,10 @@
 
 @interface ClipImageUtils : NSObject
 
-+(UIImage*)clipImageRedious:(UIImage*)image;
+@property(nonatomic) UIImage *clipImage;
+
++(ClipImageUtils*)sharedInstance;
+
+-(UIImage*)clipImageRedious:(UIImage*)image;
 
 @end

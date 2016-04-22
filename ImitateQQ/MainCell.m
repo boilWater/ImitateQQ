@@ -33,14 +33,18 @@
         [self.contentView addSubview:_IntroductionLabel];
         
         //网络
-        _networkLabel = [[UILabel alloc]initWithFrame:CGRectMake(UISCREEN_WIGHT - 60, 5, 50, 25)];
+        _networkLabel = [[UILabel alloc]initWithFrame:CGRectMake(UISCREEN_WIGHT - 60, 5, 50, 20)];
         _networkLabel.backgroundColor  = [UIColor clearColor];
         _networkLabel.textColor = [UIColor lightGrayColor];
-        _networkLabel.font = [UIFont systemFontOfSize:13];
+        _networkLabel.textAlignment = NSTextAlignmentCenter;
+        _networkLabel.font = [UIFont systemFontOfSize:10];
         [self.contentView addSubview:_networkLabel];
         
+        _bubbloView = [[UIImageView alloc] initWithFrame:CGRectMake(UISCREEN_WIGHT - 60, 27, 50, 25)];
+        [self.contentView addSubview:_bubbloView];
+        
         //分割线
-        _imageLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, 59, UISCREEN_WIGHT, 0.5)];
+        _imageLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, 59, UISCREEN_WIGHT, 1)];
         [self.contentView addSubview:_imageLine];
         
     }

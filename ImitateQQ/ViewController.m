@@ -30,27 +30,28 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    _haveHeadReFesh = YES;
     [super viewDidLoad];
     
-    titleDataArray = [[NSMutableArray alloc] init];
-    id tempTitle = [NSJSONSerialization JSONObjectWithData:[[DataIntoFileManager shareInstance] getArrayFromFile:TITLE_ACHEA_FILE] options:0 error:nil];
-    if (tempTitle != nil) {
-        [self decodeJson:tempTitle clear:YES];
-    }
-    selectedArr = [[NSMutableArray alloc] init];
-    dataArray = [[NSArray alloc] init];
-    
+    [self initTableView];
+    [self initNavigation];
     [self initView];
 }
--(void)initView{
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[ClipImageUtils clipImageRedious:[UIImage imageNamed:@"erm"]] style:UIBarButtonItemStylePlain target:self action:@selector(clipLeftItem)];
+-(void)initNavigation{
+    UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, UISCREEN_WIGHT, 70)];
+    navigationBar.backgroundColor = [UIColor clearColor];
     
-    self.navigationItem.leftBarButtonItem = leftItem;
+    UINavigationItem *navigationItem = [[UINavigationItem alloc] init];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(clipRightItem)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    navigationItem.rightBarButtonItem = rightItem;
+    navigationItem.title = @"联系人";
+    [navigationBar pushNavigationItem:navigationItem animated:YES];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, UISCREEN_WIGHT,UISCREEN_HEIGHT) style:UITableViewStylePlain];
+    [self.view addSubview:navigationBar];
+    
+}
+-(void)initTableView{
+    _haveHeadReFesh = YES;
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 72, UISCREEN_WIGHT,UISCREEN_HEIGHT) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.showsVerticalScrollIndicator = NO;
@@ -66,7 +67,20 @@
             [weakSelf getMyPresentGroup:YES];
         }];
     }
+}
+-(void)initView{
+    titleDataArray = [[NSMutableArray alloc] init];
+    id tempTitle = [NSJSONSerialization JSONObjectWithData:[[DataIntoFileManager shareInstance] getArrayFromFile:TITLE_ACHEA_FILE] options:0 error:nil];
+    if (tempTitle != nil) {
+        [self decodeJson:tempTitle clear:YES];
+    }
+    selectedArr = [[NSMutableArray alloc] init];
+    dataArray = [[NSArray alloc] init];
     
+    UIButton *headBt = [[UIButton alloc] initWithFrame:CGRectMake(18, 22, 40, 40)];
+    [headBt addTarget:self action:@selector(clipLeftItem) forControlEvents:UIControlEventTouchDown];
+    [headBt setImage:[self clipImge:[UIImage imageNamed:@"user_head"]] forState:UIControlStateNormal];
+    [self.view addSubview:headBt];
 }
 
 //下拉加载数据
@@ -178,9 +192,10 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 30, 320, 30)];
     view.backgroundColor = [UIColor whiteColor];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, tableView.frame.size.width-80, 30)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, tableView.frame.size.width-80, 30)];
     
     _groupModel = titleDataArray[section -1];
+    titleLabel.textColor = [UIColor grayColor];
     titleLabel.text = _groupModel.GroupName;
     UILabel *numberOnLine = [[UILabel alloc] initWithFrame:CGRectMake(tableView.frame.size.width - 60, 5, 60, 30)];
     numberOnLine.font = [UIFont systemFontOfSize:14];
@@ -259,7 +274,7 @@
             }
             _personModel = [_groupModel.personArray objectAtIndex:indexPath.section-1];
             cell.nameLabel.text = _personModel.niceName;
-            cell.IntroductionLabel.text = _personModel.intro;
+            cell.IntroductionLabel.text =[[NSString stringWithString:_personModel.intro] substringToIndex:18];
             cell.networkLabel.text = _personModel.netStatus;
             
             [cell.Headerphoto sd_setImageWithURL:[NSURL URLWithString:_personModel.avatar] placeholderImage:[UIImage imageNamed:@"placeholder.png"] isClipRound:YES];
@@ -299,28 +314,37 @@
 #pragma 
 #pragma 在界面中图片的选择监听
 -(void)selectFriendImage{
-    NSLog(@"点击FRIEND_IMAGE_TAG");
+    [SVProgressHUD showInfoWithStatus:@"新朋友"];
 }
 -(void)selectGroupImage{
-    NSLog(@"点击selectGroupImage");
+    [SVProgressHUD showInfoWithStatus:@"群组"];
 }
 -(void)selectSpecialCareImage{
-    NSLog(@"点击selectSpecialCareImage");
+    [SVProgressHUD showInfoWithStatus:@"特别关心"];
 }
 -(void)selectpublicImage{
-    NSLog(@"点击selectpublicImage");
+    [SVProgressHUD showInfoWithStatus:@"公众号"];
 }
 #pragma 点击头像按钮
 -(void)clipLeftItem{
-    NSLog(@"点击头像按钮");
+    [SVProgressHUD showInfoWithStatus:@"点击头像"];
 }
 #pragma 点击navigation的左侧按钮
 -(void)clipRightItem{
-    NSLog(@"点击navigation的左侧按钮");
+    [SVProgressHUD showInfoWithStatus:@"点击navigation的左侧按钮"];
 }
 
 -(void)dealloc{
     NSLog(@"ViewController");
+}
+-(UIImage*)clipImge:(UIImage *)image{
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0);
+    UIBezierPath *clipBezier = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, image.size.width, image.size.width)];
+    [clipBezier addClip];
+    [image drawAtPoint:CGPointZero];
+    self.headImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return self.headImage;
 }
 
 
