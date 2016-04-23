@@ -15,7 +15,9 @@
 - (void)reloadData
 
 {
+//    _placeHolerHidden = YES;
     if (!_placeHolerHidden) {
+        _needShowPlaceHoler = YES;
         if (_needShowPlaceHoler == NO) {
             _needShowPlaceHoler = YES;
         }else {
@@ -35,17 +37,17 @@
         return;
     }
     if (_placeHolerView == nil) {
-        UIView* bg = [[UIView alloc] initWithFrame:self.bounds];
-        bg.backgroundColor = [UIColor whiteColor];
+        UIView* bg = [[UIView alloc] initWithFrame:CGRectMake(0, 120, UISCREEN_WIGHT, UISCREEN_HEIGHT - 120)];
+        bg.backgroundColor = [UIColor clearColor];
         [self.superview addSubview:bg];
         _placeHolerView = bg;
         
         CGRect tmpFrame = CGRectZero;
         if (_placeHolerImage) {
-            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_share"]];
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_placeHolerImage]];
             tmpFrame = imgView.frame;
             tmpFrame.origin.x = self.frame.size.width/2 - tmpFrame.size.width/2;
-            tmpFrame.origin.y = self.frame.size.height/2 - tmpFrame.size.height/2;
+            tmpFrame.origin.y = self.frame.size.height/2 - tmpFrame.size.height/2 -120;
             imgView.frame = tmpFrame;
             [bg addSubview:imgView];
             _imageView = imgView;

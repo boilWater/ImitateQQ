@@ -15,6 +15,7 @@
 		AE50616A1CC75F8900A68887 /* no_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE5061691CC75F8900A68887 /* no_share@2x.png */; };
 		AE865CA41CCA25DA008B5764 /* message.png in Resources */ = {isa = PBXBuildFile; fileRef = AE865CA21CCA25DA008B5764 /* message.png */; };
 		AE865CA51CCA25DA008B5764 /* friend.png in Resources */ = {isa = PBXBuildFile; fileRef = AE865CA31CCA25DA008B5764 /* friend.png */; };
+		AE8E8D271CCA7CEC00B860A0 /* message_no.png in Resources */ = {isa = PBXBuildFile; fileRef = AE8E8D261CCA7CEC00B860A0 /* message_no.png */; };
 		AE933C231CC4942E00F20F78 /* KeepArray.m in Sources */ = {isa = PBXBuildFile; fileRef = AE933C151CC4942E00F20F78 /* KeepArray.m */; };
 		AE933C241CC4942E00F20F78 /* KeepAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = AE933C171CC4942E00F20F78 /* KeepAttribute.m */; };
 		AE933C251CC4942E00F20F78 /* KeepLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = AE933C1A1CC4942E00F20F78 /* KeepLayoutConstraint.m */; };
@@ -132,6 +133,7 @@
 		AE5061691CC75F8900A68887 /* no_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_share@2x.png"; sourceTree = "<group>"; };
 		AE865CA21CCA25DA008B5764 /* message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message.png; sourceTree = "<group>"; };
 		AE865CA31CCA25DA008B5764 /* friend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friend.png; sourceTree = "<group>"; };
+		AE8E8D261CCA7CEC00B860A0 /* message_no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_no.png; sourceTree = "<group>"; };
 		AE933C141CC4942E00F20F78 /* KeepArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepArray.h; sourceTree = "<group>"; };
 		AE933C151CC4942E00F20F78 /* KeepArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeepArray.m; sourceTree = "<group>"; };
 		AE933C161CC4942E00F20F78 /* KeepAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeepAttribute.h; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 		AED7D29A1CC21DF8004E61B2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AE8E8D261CCA7CEC00B860A0 /* message_no.png */,
 				AE865CA21CCA25DA008B5764 /* message.png */,
 				AE865CA31CCA25DA008B5764 /* friend.png */,
 				AE09F2C81CC9343B0054B91B /* user_head.png */,
@@ -797,6 +800,7 @@
 				AED7D22A1CC1DC40004E61B2 /* Assets.xcassets in Resources */,
 				AED7D27F1CC1E0F7004E61B2 /* MJRefresh.bundle in Resources */,
 				AE865CA41CCA25DA008B5764 /* message.png in Resources */,
+				AE8E8D271CCA7CEC00B860A0 /* message_no.png in Resources */,
 				AE933C2B1CC49C2E00F20F78 /* search.png in Resources */,
 				AED7D3A21CC36AD1004E61B2 /* 2.png in Resources */,
 				AED7D2281CC1DC40004E61B2 /* Main.storyboard in Resources */,
