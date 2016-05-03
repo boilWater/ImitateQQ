@@ -17,6 +17,7 @@
     if (self) {
         [self initSearch];
         [self initFourImageView];
+
     }
     return self;
 }

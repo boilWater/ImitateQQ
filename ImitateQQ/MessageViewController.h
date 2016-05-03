@@ -14,7 +14,7 @@
 #import "BaseUITableViewController.h"
 #import "QHBubble.h"
 
-@interface MessageViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,QHBubbleDelegate,UISearchBarDelegate>{
+@interface MessageViewController : UIViewController<UITableViewDelegate,QHBubbleDelegate,UISearchBarDelegate>{
     NSInteger tapView;
     QHBubble *_bubbleV;
 }

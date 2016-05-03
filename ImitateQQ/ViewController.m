@@ -20,10 +20,17 @@
 #import "UIImageView+WebCache.h"
 #import "FriendTitleCell.h"
 #import "DataIntoFileManager.h"
+#import "ArrayDataSource.h"
+#import "MessageCell.h"
+#import "MessageCell+configureMessageCell.h"
 
 #define MAIN_CELL @"main_cell"
 
 @interface ViewController ()
+
+@property(nonatomic, strong) ArrayDataSource *arrayDataSource;
+@property(nonatomic, strong) TableViewCellConfigureBlock cellConfigureBlock;
+
 @end
 
 
@@ -32,9 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initTableView];
     [self initNavigation];
     [self initView];
+    [self initTableView];
 }
 -(void)initNavigation{
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, UISCREEN_WIGHT, 70)];
@@ -51,15 +58,18 @@
 }
 -(void)initTableView{
     _haveHeadReFesh = YES;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 72, UISCREEN_WIGHT,UISCREEN_HEIGHT) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 72, UISCREEN_WIGHT,UISCREEN_HEIGHT-70) style:UITableViewStylePlain];
+    _tableView = tableView;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_tableView];
-    FriendTitleCell *friendCell = [[FriendTitleCell alloc] initWithFrame:CGRectMake(0, 0, UISCREEN_WIGHT, FRIEND_CELL_WIDTH +65)];
+    
+    FriendTitleCell *friendCell = [[FriendTitleCell alloc] init];
     friendCell.selectFriImagSelegate = self;
     self.friendCell = friendCell;
+    self.tableView.tableHeaderView = self.friendCell;
+    [self.view addSubview:_tableView];
     
     if (_haveHeadReFesh) {
         __weak typeof(self) weakSelf = self;
@@ -257,9 +267,7 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:friendTitle];
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell addSubview:self.friendCell];
-        return cell;
+         return cell;
         
     }else{
         _groupModel = titleDataArray[indexPath.section-1];

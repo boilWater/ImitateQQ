@@ -8,17 +8,24 @@
 
 #import "MessageViewController.h"
 #import "BaseUITableViewController.h"
-#import "MesSegPhoneViewController.h"
 #import "ClipImageUtils.h"
 #import "Imitate-Prefix.pch"
 #import "MainCell.h"
 #import "BaseSearchView.h"
 #import "MJRefresh.h"
 #import "AppMacros.h"
-#import "UITabBar+bage.h"
 #import "SVProgressHUD.h"
+#import "ArrayDataSource.h"
+#import "MessageCell.h"
+#import "MessageCell+configureMessageCell.m"
 
-#define MAIN_CELL @"mainCell"
+static NSString *const cellIdentifer = @"MessageCell";
+
+@interface MessageViewController()
+
+@property(nonatomic, strong) ArrayDataSource *dataSourceTableView;
+
+@end
 
 @implementation MessageViewController{
     NSArray *array;
@@ -80,14 +87,21 @@
     _messageTableView = baseTableView;
     _messageTableView.tableHeaderView = [self headTableView];
     _messageTableView.showsVerticalScrollIndicator = YES;
-    _messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _messageTableView.dataSource = self;
+    _messageTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _messageTableView.delegate = self;
     _messageTableView.placeHolerImage = @"message_no";
     _messageTableView.placeHolerText = @"目前没有信息";
     
     array = [NSArray arrayWithObjects:@"nihao",@"nihao",@"nihao",@"nihao",@"nihao",@"nihao",@"nihao",@"nihao", nil];
     self.messageArray = array;
+
+    TableViewCellConfigureBlock configureCell =  ^(MessageCell *cell, NSString *item){
+        [cell configureMessageCell:item];
+    };
+    self.dataSourceTableView = [[ArrayDataSource alloc] initWithItems:self.messageArray
+                                                        cellIndefiter:cellIdentifer configureCellBlock:configureCell];
+    self.messageTableView.dataSource = self.dataSourceTableView;
+    [self.messageTableView registerNib:[MessageCell nib] forCellReuseIdentifier:cellIdentifer];
     
     if (_haveHeadReFesh) {
         __weak typeof(self) weakSelf = self;
@@ -112,7 +126,6 @@
     _phoneTableView.tableHeaderView = [self headTableView];
     _phoneTableView.showsVerticalScrollIndicator = YES;
     _phoneTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _phoneTableView.dataSource = self;
     _phoneTableView.delegate = self;
     _phoneTableView.placeHolerText = @"目前没有信息";
     _phoneTableView.placeHolerImage = @"message_no";
@@ -124,7 +137,7 @@
         }];
     }
     
-    [self.view addSubview:self.phoneTableView];
+//    [self.view addSubview:_phoneTableView];
 }
 //得到群组信息
 -(void)getMyPresentGroup:(BOOL)clear{
@@ -146,15 +159,6 @@
 }
 
 #pragma tableView datasource and delegate
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (self.messageTableView == tableView) {
-        return self.messageArray.count;
-    }
-    if (self.phoneTableView == tableView) {
-        return self.phoneArray.count;
-    }
-    return 0;
-}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.messageTableView == tableView) {
         return 60;
@@ -164,27 +168,7 @@
     }
     return 0;
 }
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(self.messageTableView == tableView)
-    {
-        MainCell *cell = [tableView dequeueReusableCellWithIdentifier:MAIN_CELL];
-        if (cell == nil) {
-            cell = [[MainCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MAIN_CELL];
-        }
-        cell.nameLabel.text = array[indexPath.section];
-        cell.imageLine.image = [UIImage imageNamed:@"line"];
-        cell.IntroductionLabel.text = @"个性签名：我是你的还朋友！！";
-        cell.networkLabel.text = @"下午3:00";
-        [cell.Headerphoto setImage:[UIImage imageNamed:@"no_share@2x"]];
-        
-        return cell;
-    }
-    //如果是phoneView就对其进行相关的Cell自定义
-    if (self.phoneTableView == tableView) {
-        return nil;
-    }
-    return nil;
-}
+
 #pragma 在选着栏进行消息提醒功能
 - (void)sendMessageAction
 {
